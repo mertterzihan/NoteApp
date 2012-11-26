@@ -1,4 +1,4 @@
-package com.globalmaksimum.noteapp.model;
+package com.globalmaksimum.noteapp.model.repository.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.globalmaksimum.noteapp.model.Note;
+import com.globalmaksimum.noteapp.model.exception.AnyNoteNotFoundException;
+import com.globalmaksimum.noteapp.model.repository.NoteDAO;
+
 public class JDBCNoteRepository extends DatabaseConnection implements
-		NoteRepository {
+		NoteDAO {
 
 	@Override
 	public List<Note> retrieveNotes() throws SQLException {

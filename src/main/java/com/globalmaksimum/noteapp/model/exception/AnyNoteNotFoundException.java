@@ -1,4 +1,5 @@
-package com.globalmaksimum.noteapp.model;
+package com.globalmaksimum.noteapp.model.exception;
+
 
 public class AnyNoteNotFoundException extends NoteAppException {
 

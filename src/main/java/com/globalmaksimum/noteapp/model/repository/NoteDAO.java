@@ -1,10 +1,12 @@
-package com.globalmaksimum.noteapp.model;
+package com.globalmaksimum.noteapp.model.repository;
 
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-public interface NoteRepository {
+import com.globalmaksimum.noteapp.model.Note;
+
+public interface NoteDAO {
 
 	public abstract List<Note> retrieveNotes() throws SQLException;
 	

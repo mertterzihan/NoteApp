@@ -10,12 +10,15 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import com.globalmaksimum.noteapp.model.repository.NoteBO;
+import com.globalmaksimum.noteapp.model.repository.UserBO;
+
 public class EmailReport implements ReportingService {
 
 	private SimpleMailMessage message;
 	private MailSender mailSender;
-	private UserRepository userRepository;
-	private NoteRepository noteRepository;
+	private UserBO userRepository;
+	private NoteBO noteRepository;
 
 	@Override
 	@Scheduled(cron = "0 0 * * * *")
@@ -46,11 +49,11 @@ public class EmailReport implements ReportingService {
 
 	}
 
-	public UserRepository getUserRepository() {
+	public UserBO getUserRepository() {
 		return userRepository;
 	}
 
-	public void setUserRepository(UserRepository userRepository) {
+	public void setUserRepository(UserBO userRepository) {
 		this.userRepository = userRepository;
 	}
 
@@ -70,11 +73,11 @@ public class EmailReport implements ReportingService {
 		this.mailSender = mailSender;
 	}
 
-	public NoteRepository getNoteRepository() {
+	public NoteBO getNoteRepository() {
 		return noteRepository;
 	}
 
-	public void setNoteRepository(NoteRepository noteRepository) {
+	public void setNoteRepository(NoteBO noteRepository) {
 		this.noteRepository = noteRepository;
 	}
 

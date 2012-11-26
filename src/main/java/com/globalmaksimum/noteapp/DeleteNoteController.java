@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.globalmaksimum.noteapp.model.NoteRepository;
+import com.globalmaksimum.noteapp.model.repository.NoteBO;
 
 @Controller
 @RequestMapping("/delete")
 public class DeleteNoteController {
 
-	private NoteRepository noteRepository;
+	private NoteBO noteRepository;
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String addNewEvent(@RequestParam("note") String id, Model model)
@@ -25,11 +25,11 @@ public class DeleteNoteController {
 		return "redirect:/home";
 	}
 
-	public NoteRepository getNoteRepository() {
+	public NoteBO getNoteRepository() {
 		return noteRepository;
 	}
 
-	public void setNoteRepository(NoteRepository noteRepository) {
+	public void setNoteRepository(NoteBO noteRepository) {
 		this.noteRepository = noteRepository;
 	}
 

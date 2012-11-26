@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.globalmaksimum.noteapp.model.Note;
-import com.globalmaksimum.noteapp.model.NoteRepository;
+import com.globalmaksimum.noteapp.model.repository.NoteBO;
 
 /**
  * Handles requests for the application home page.
@@ -17,7 +17,7 @@ import com.globalmaksimum.noteapp.model.NoteRepository;
 @Controller
 public class HomeController {
 
-	private NoteRepository noteRepository;
+	private NoteBO noteRepository;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -50,11 +50,11 @@ public class HomeController {
 		return "delete";
 	}
 
-	public NoteRepository getNoteRepository() {
+	public NoteBO getNoteRepository() {
 		return noteRepository;
 	}
 
-	public void setNoteRepository(NoteRepository noteRepository) {
+	public void setNoteRepository(NoteBO noteRepository) {
 		this.noteRepository = noteRepository;
 	}
 

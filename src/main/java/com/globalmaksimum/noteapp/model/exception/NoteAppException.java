@@ -1,4 +1,4 @@
-package com.globalmaksimum.noteapp.model;
+package com.globalmaksimum.noteapp.model.exception;
 
 public abstract class NoteAppException extends RuntimeException{
 

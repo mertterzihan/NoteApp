@@ -1,19 +1,28 @@
-package com.globalmaksimum.noteapp.model;
+package com.globalmaksimum.noteapp.model.repository.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JDBCUserRepository extends DatabaseConnection implements UserRepository {
+import com.globalmaksimum.noteapp.model.User;
+import com.globalmaksimum.noteapp.model.exception.UserNotFoundException;
+import com.globalmaksimum.noteapp.model.repository.UserDAO;
+
+public class JDBCUserRepository extends DatabaseConnection implements
+		UserDAO {
 
 	JDBCUserRepository() throws SQLException, ClassNotFoundException {
 		super();
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.globalmaksimum.noteapp.model.UserRepository#retrieveUser(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.globalmaksimum.noteapp.model.UserRepository#retrieveUser(java.lang
+	 * .String)
 	 */
 	@Override
 	public User retrieveUser(String user) throws SQLException {

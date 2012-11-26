@@ -1,62 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:task="http://www.springframework.org/schema/task"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="username" value="username"/>
-		<property name="password" value="password"/>
-		<property name="initialSize" value="2"/>
-		<property name="minIdle" value="1"/>
-		<property name="url" value="jdbc:mysql://localhost/database_name"/>
-		<property name="maxActive" value="5"/>
-		<property name="testOnBorrow" value="true"/>
-		<property name="validationQuery" value="/* ping */ select 1"/>
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="username" value="username" />
+		<property name="password" value="password" />
+		<property name="initialSize" value="2" />
+		<property name="minIdle" value="1" />
+		<property name="url" value="jdbc:mysql://localhost/your_database" />
+		<property name="maxActive" value="5" />
+		<property name="testOnBorrow" value="true" />
+		<property name="validationQuery" value="/* ping */ select 1" />
 	</bean>
-	
-	<bean id="userRepository" class="com.globalmaksimum.noteapp.model.JDBCUserRepository">
-		<property name="dataSource" ref="dataSource"/>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>/hibernate/Note.hbm.xml</value>
+				<value>/hibernate/User.hbm.xml</value>
+			</list>
+		</property>
 	</bean>
-	
-	<bean id="noteRepository" class="com.globalmaksimum.noteapp.model.JDBCNoteRepository">
-		<property name="dataSource" ref="dataSource"/>
+
+	<bean id="noteBO"
+		class="com.globalmaksimum.noteapp.model.repository.jpa.JpaNoteBO">
+		<property name="jpaNoteDao" ref="noteDao" />
 	</bean>
-	
+
+	<bean id="noteDao"
+		class="com.globalmaksimum.noteapp.model.repository.jpa.JpaNoteDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="userBO"
+		class="com.globalmaksimum.noteapp.model.repository.jpa.JpaUserBO">
+		<property name="jpaUserDAO" ref="userDao" />
+	</bean>
+
+	<bean id="userDao"
+		class="com.globalmaksimum.noteapp.model.repository.jpa.JpaUserDAO">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 	<mvc:annotation-driven />
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
+		up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
+
 	<context:component-scan base-package="com.globalmaksimum.noteapp" />
 
-	<task:scheduler id="taskScheduler"/>
-	<task:executor id="taskExecutor" pool-size="1"/>
-	<task:annotation-driven executor="taskExecutor" scheduler="taskScheduler"/>
-	
+	<task:scheduler id="taskScheduler" />
+	<task:executor id="taskExecutor" pool-size="1" />
+	<task:annotation-driven executor="taskExecutor"
+		scheduler="taskScheduler" />
+
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-  		<property name="host" value="your_host" />
+		<property name="host" value="your_host" />
 		<property name="port" value="465" />
 		<property name="protocol" value="smtps" />
-		<property name="username" value="username"/>
-		<property name="password" value="password"/>
+		<property name="username" value="username" />
+		<property name="password" value="password" />
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtps.auth">true</prop>
@@ -67,27 +100,31 @@
 	</bean>
 
 	<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
-  		<property name="from"><value>admin@noteapp.com</value></property>
-  		<property name="subject"><value>Today's Notes on NoteApp</value></property>
+		<property name="from">
+			<value>admin@noteapp.com</value>
+		</property>
+		<property name="subject">
+			<value>Today's Notes on NoteApp</value>
+		</property>
 	</bean>
 
-	<bean id="emailReport" class="com.globalmaksimum.noteapp.model.EmailReport" >
-  		<property name="mailSender" ref="mailSender"/>
-  		<property name="message" ref="mailMessage"/>
-  		<property name="userRepository" ref="userRepository"/>
-  		<property name="noteRepository" ref="noteRepository"/>
+	<bean id="emailReport" class="com.globalmaksimum.noteapp.model.EmailReport">
+		<property name="mailSender" ref="mailSender" />
+		<property name="message" ref="mailMessage" />
+		<property name="userRepository" ref="userBO" />
+		<property name="noteRepository" ref="noteBO" />
 	</bean>
-	
+
 	<bean id="deleteNoteController" class="com.globalmaksimum.noteapp.DeleteNoteController">
-		<property name="noteRepository" ref="noteRepository"/>
+		<property name="noteRepository" ref="noteBO" />
 	</bean>
-	
+
 	<bean id="homeController" class="com.globalmaksimum.noteapp.HomeController">
-		<property name="noteRepository" ref="noteRepository"/>
+		<property name="noteRepository" ref="noteBO" />
 	</bean>
-	
+
 	<bean id="newNoteController" class="com.globalmaksimum.noteapp.NewNoteController">
-		<property name="noteRepository" ref="noteRepository"/>
+		<property name="noteRepository" ref="noteBO" />
 	</bean>
-	
+
 </beans>

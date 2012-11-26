@@ -1,4 +1,4 @@
-package com.globalmaksimum.noteapp.model;
+package com.globalmaksimum.noteapp.model.repository.jdbc;
 
 import java.sql.Connection;
 import java.sql.SQLException;

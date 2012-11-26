@@ -1,9 +1,21 @@
 package com.globalmaksimum.noteapp.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Note {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+//@Entity
+public class Note implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	private String note;
 	private Date date;
@@ -39,6 +51,12 @@ public class Note {
 	public Note(Integer id, String note, Date date, String priority) {
 		super();
 		this.id = id;
+		this.note = note;
+		this.date = date;
+		this.priority = priority;
+	}
+	public Note(String note, Date date, String priority) {
+		super();
 		this.note = note;
 		this.date = date;
 		this.priority = priority;
