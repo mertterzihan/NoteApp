@@ -20,7 +20,7 @@ public class DeleteNoteController {
 	public String addNewEvent(@RequestParam("note") String id, Model model)
 			throws SQLException, ClassNotFoundException {
 
-		noteRepository.deleteNote(id);
+		noteRepository.deleteNote(new Integer(id));
 
 		return "redirect:/home";
 	}

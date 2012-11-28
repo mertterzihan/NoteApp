@@ -3,6 +3,7 @@ package com.globalmaksimum.noteapp.model.repository.jpa;
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.globalmaksimum.noteapp.model.User;
 import com.globalmaksimum.noteapp.model.repository.UserDAO;

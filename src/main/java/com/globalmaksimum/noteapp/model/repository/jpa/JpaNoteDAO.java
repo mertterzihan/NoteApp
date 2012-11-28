@@ -1,13 +1,13 @@
 package com.globalmaksimum.noteapp.model.repository.jpa;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.globalmaksimum.noteapp.model.Note;
-import com.globalmaksimum.noteapp.model.User;
 import com.globalmaksimum.noteapp.model.repository.NoteDAO;
 
 public class JpaNoteDAO extends HibernateDaoSupport implements
@@ -19,7 +19,7 @@ public class JpaNoteDAO extends HibernateDaoSupport implements
 	}
 
 	@Override
-	public void deleteNote(String id) {
+	public void deleteNote(Integer id) {
 		List list = getHibernateTemplate().find(
                 "from Note where id=?",id
           );
