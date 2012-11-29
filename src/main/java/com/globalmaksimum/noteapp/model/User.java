@@ -5,25 +5,25 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class User implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//@Id
+	@Id
 	private String userName;
 	private String name;
 	private String surname;
 	private String email;
-	
-	
+
 	@Override
 	public String toString() {
 		return "User [userName=" + userName + ", name=" + name + ", surname="
 				+ surname + ", email=" + email + "]";
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -32,6 +32,7 @@ public class User implements Serializable {
 				+ ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -48,6 +49,7 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
+
 	public User(String userName, String name, String surname, String email) {
 		super();
 		this.userName = userName;
@@ -55,30 +57,39 @@ public class User implements Serializable {
 		this.surname = surname;
 		this.email = email;
 	}
+
 	public User() {
 		super();
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getSurname() {
 		return surname;
 	}
+
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}

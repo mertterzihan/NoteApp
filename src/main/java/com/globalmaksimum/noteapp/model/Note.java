@@ -8,46 +8,56 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-//@Entity
+@Entity
 public class Note implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String note;
 	private Date date;
 	private String priority;
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getNote() {
 		return note;
 	}
+
 	public void setNote(String note) {
 		this.note = note;
 	}
+
 	public Date getDate() {
 		return date;
 	}
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
 	public String getPriority() {
 		return priority;
 	}
+
 	public void setPriority(String priority) {
 		this.priority = priority;
 	}
+
 	public Note() {
 		super();
 	}
+
 	public Note(Integer id, String note, Date date, String priority) {
 		super();
 		this.id = id;
@@ -55,12 +65,14 @@ public class Note implements Serializable {
 		this.date = date;
 		this.priority = priority;
 	}
+
 	public Note(String note, Date date, String priority) {
 		super();
 		this.note = note;
 		this.date = date;
 		this.priority = priority;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -68,6 +80,7 @@ public class Note implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -84,10 +97,11 @@ public class Note implements Serializable {
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", note=" + note + ", date=" + date
 				+ ", priority=" + priority + "]";
 	}
-	
+
 }
