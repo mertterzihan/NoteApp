@@ -1,12 +1,14 @@
 package com.globalmaksimum.noteapp.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Note implements Serializable {
@@ -19,6 +21,7 @@ public class Note implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String note;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	private String priority;
 

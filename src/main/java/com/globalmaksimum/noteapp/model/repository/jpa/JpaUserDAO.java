@@ -1,25 +1,21 @@
 package com.globalmaksimum.noteapp.model.repository.jpa;
 
-import java.util.List;
-
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.EntityManager;
 
 import com.globalmaksimum.noteapp.model.User;
 import com.globalmaksimum.noteapp.model.repository.UserDAO;
 
-public class JpaUserDAO extends HibernateDaoSupport implements UserDAO {
-	
-	JpaUserDAO() {
-		super();
+public class JpaUserDAO implements UserDAO {
 
-	}
+	private EntityManager entityManager;
 
 	@Override
 	public User retrieveUser(String user) {
-		List list = getHibernateTemplate().find("from User where username=?", user);
-		return (User)list.get(0);
+		return entityManager.find(User.class, user);
 	}
 
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
 
 }
