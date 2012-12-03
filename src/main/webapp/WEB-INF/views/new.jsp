@@ -5,6 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>New Note</title>
 <link rel="stylesheet"
@@ -19,7 +20,7 @@
 </script>
 </head>
 <body>
-	<form method="post">
+	<form id="newForm" action="new">
 		<fieldset>
 			<legend>New Note</legend>
 			<table cellspacing="0">
@@ -42,10 +43,30 @@
 				</tr>
 				<tr>
 					<th></th>
-					<td><input type="submit" value="Submit" /></td>
+					<td><input type="submit" value="Submit"/></td>
 				</tr>
 			</table>
 		</fieldset>
 	</form>
+	<script>
+		$("#newForm").submit(
+				function(event) {
+
+					event.preventDefault();
+					var $form = $(this), 
+					note = $form.find("textarea[name=note]").val(),
+					datepicker = $form.find("input[name=datepicker]").val(),
+					priority = $form.find("select[name=priority]").val(),
+					url = $form.attr( 'action' );
+					$.post(url, {
+						note : note,
+						datepicker : datepicker,
+						priority : priority
+					},
+					function redirect(){
+						window.location.replace("home");
+					});
+				}); 
+	</script>
 </body>
 </html>
