@@ -1,28 +1,40 @@
 package com.globalmaksimum.noteapp;
 
-import java.sql.SQLException;
+import java.util.List;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
+import com.globalmaksimum.noteapp.model.Note;
 import com.globalmaksimum.noteapp.model.repository.NoteBO;
+import com.sun.jersey.api.view.Viewable;
 
-@Controller
-@RequestMapping("/delete")
+@Path("/delete")
 public class DeleteNoteController {
 
 	private NoteBO noteRepository;
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String addNewEvent(@RequestParam("note") String id, Model model)
-			throws SQLException, ClassNotFoundException {
-
+	@POST
+	public Response addNewEvent(@FormParam("note") String id) {
+		
+		if(id==null){
+			return Response.status(200).entity(new Viewable("/")).build();
+		}
+		
 		noteRepository.deleteNote(new Integer(id));
 
-		return "redirect:/home";
+		return Response.status(200).entity(new Viewable("/")).build();
+	}
+	
+	@GET
+	public Response deleteEvent() {
+
+		List<Note> list = noteRepository.retrieveNotes();
+
+		return Response.status(200).entity(new Viewable("/delete", list)).build();
 	}
 
 	public NoteBO getNoteRepository() {

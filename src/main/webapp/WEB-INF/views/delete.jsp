@@ -19,7 +19,7 @@
 					<th>Date</th>
 					<th>Priority</th>
 				</tr>
-				<c:forEach var="instance" items="${instances}">
+				<c:forEach var="instance" items="${it}">
 					<tr>
 						<td><input type="radio" name="note" value="${instance.id}"></td>
 						<td>${instance.note}</td>
@@ -46,7 +46,7 @@
 						note : note
 					},
 					function redirect(){
-						window.location.replace("home");
+						window.location.replace("/NoteApp/");
 					});
 				}); 
 	</script>

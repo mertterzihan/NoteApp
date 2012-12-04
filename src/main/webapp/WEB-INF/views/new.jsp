@@ -64,7 +64,7 @@
 						priority : priority
 					},
 					function redirect(){
-						window.location.replace("home");
+						window.location.replace("/NoteApp/");
 					});
 				}); 
 	</script>

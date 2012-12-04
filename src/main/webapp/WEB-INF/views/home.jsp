@@ -34,7 +34,7 @@
 	  	<th>Date</th>
 	  	<th>Priority</th>
 	  </tr>
-      <c:forEach var="instance" items="${instances}">
+      <c:forEach var="instance" items="${it}">
         <tr>
           <td>${instance.note}</td>
           <td>${instance.date}</td>

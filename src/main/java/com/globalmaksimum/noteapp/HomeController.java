@@ -3,18 +3,18 @@ package com.globalmaksimum.noteapp;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
 import com.globalmaksimum.noteapp.model.Note;
 import com.globalmaksimum.noteapp.model.repository.NoteBO;
+import com.sun.jersey.api.view.Viewable;
 
 /**
  * Handles requests for the application home page.
  */
-@Controller
+@Path("/")
 public class HomeController {
 
 	private NoteBO noteRepository;
@@ -25,29 +25,13 @@ public class HomeController {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	@RequestMapping(value = { "/", "home" })
-	public String home(Model model) throws SQLException, ClassNotFoundException {
+	
+	@GET
+	public Response home() {
 
-		List<Note> list = noteRepository.retrieveNotes();
-		model.addAttribute("instances", list);
+		List<Note> instances = noteRepository.retrieveNotes();
 
-		return "home";
-	}
-
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String newEvent() {
-
-		return "new";
-	}
-
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String deleteEvent(Model model) throws SQLException,
-			ClassNotFoundException {
-
-		List<Note> list = noteRepository.retrieveNotes();
-		model.addAttribute("instances", list);
-
-		return "delete";
+		return Response.status(200).entity(new Viewable("/home", instances)).build();
 	}
 
 	public NoteBO getNoteRepository() {
