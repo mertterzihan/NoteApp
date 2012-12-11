@@ -12,4 +12,5 @@ public class Note_ {
 	public static volatile SingularAttribute<Note, String> note;
 	public static volatile SingularAttribute<Note, Date> date;
 	public static volatile SingularAttribute<Note, String> priority;
+	public static volatile SingularAttribute<Note, String> username;
 }

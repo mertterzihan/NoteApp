@@ -25,7 +25,7 @@ public class NewNoteController {
 			throws ParseException {
 
 		if(!Date.matches("\\d{2}/\\d{2}/\\d{4}")){
-			return Response.status(200).entity(new Viewable("/")).build();
+			return Response.status(200).entity(new Viewable("/home")).build();
 		}
 		String pattern = "MM/dd/yyyy";
 		SimpleDateFormat format = new SimpleDateFormat(pattern);
@@ -33,7 +33,7 @@ public class NewNoteController {
 
 		noteRepository.insertNewNode(Note, date, Priority);
 
-		return Response.status(200).entity(new Viewable("/")).build();
+		return Response.status(200).entity(new Viewable("/home")).build();
 	}
 	
 	@GET

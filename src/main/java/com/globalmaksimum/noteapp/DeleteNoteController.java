@@ -21,12 +21,12 @@ public class DeleteNoteController {
 	public Response addNewEvent(@FormParam("note") String id) {
 		
 		if(id==null){
-			return Response.status(200).entity(new Viewable("/")).build();
+			return Response.status(200).entity(new Viewable("/home")).build();
 		}
 		
 		noteRepository.deleteNote(new Integer(id));
 
-		return Response.status(200).entity(new Viewable("/")).build();
+		return Response.status(200).entity(new Viewable("/home")).build();
 	}
 	
 	@GET

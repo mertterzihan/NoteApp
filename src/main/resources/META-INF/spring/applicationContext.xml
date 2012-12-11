@@ -11,6 +11,42 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 	<!-- eclipselink weaver config -->
+
+	<!-- Apache Shiro -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/" />
+		<property name="successUrl" value="/home" />
+		<property name="filterChainDefinitions">
+			<value>
+				/** = authc
+			</value>
+		</property>
+	</bean>
+
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="noteAppRealm" />
+	</bean>
+
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+	<bean
+		class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+
+	<bean id="noteAppRealm" class="org.apache.shiro.realm.text.IniRealm">
+		<constructor-arg value="classpath:shiro.ini" type="java.lang.String" />
+	</bean>
+
+	<bean id="secureRemoteInvocationExecutor"
+		class="org.apache.shiro.spring.remoting.SecureRemoteInvocationExecutor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+
+	<bean id="secureRemoteInvocationFactory"
+		class="org.apache.shiro.spring.remoting.SecureRemoteInvocationFactory" />
+
 	<context:load-time-weaver />
 	<bean
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"

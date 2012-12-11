@@ -19,6 +19,11 @@
 				<input type="submit" value="Delete a Note">
 			</form>
 		</td>
+		<td>
+			<form name="Logout" action="" method="post">
+				<input type="submit" value="Logout">
+			</form>
+		</td>
 	</tr>
 	<tr>
 		<td>

@@ -24,6 +24,7 @@ public class Note implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	private String priority;
+	private String username;
 
 	public Integer getId() {
 		return id;
@@ -61,19 +62,21 @@ public class Note implements Serializable {
 		super();
 	}
 
-	public Note(Integer id, String note, Date date, String priority) {
+	public Note(Integer id, String note, Date date, String priority, String username) {
 		super();
 		this.id = id;
 		this.note = note;
 		this.date = date;
 		this.priority = priority;
+		this.username = username;
 	}
 
-	public Note(String note, Date date, String priority) {
+	public Note(String note, Date date, String priority, String username) {
 		super();
 		this.note = note;
 		this.date = date;
 		this.priority = priority;
+		this.username = username;
 	}
 
 	@Override
@@ -104,7 +107,15 @@ public class Note implements Serializable {
 	@Override
 	public String toString() {
 		return "Note [id=" + id + ", note=" + note + ", date=" + date
-				+ ", priority=" + priority + "]";
+				+ ", priority=" + priority + ", username=" + username + "]";
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

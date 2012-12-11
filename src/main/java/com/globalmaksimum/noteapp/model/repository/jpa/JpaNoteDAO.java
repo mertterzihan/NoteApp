@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TemporalType;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
 import com.globalmaksimum.noteapp.model.Note;
 import com.globalmaksimum.noteapp.model.repository.NoteDAO;
 
@@ -14,20 +17,27 @@ public class JpaNoteDAO implements NoteDAO {
 
 	@Override
 	public List<Note> retrieveNotes() {
-		return entityManager.createQuery("select n from Note n", Note.class)
+		Subject subject = SecurityUtils.getSubject();
+		return entityManager
+				.createQuery("select n from Note n where n.username=:username",
+						Note.class)
+				.setParameter("username", subject.getPrincipal().toString())
 				.getResultList();
 	}
 
 	@Override
 	public void deleteNote(Integer id) {
-		entityManager.createQuery("delete from Note n where n.id=:id")
-				.setParameter("id", id).executeUpdate();
+		Subject subject = SecurityUtils.getSubject();
+		entityManager.createQuery("delete from Note n where n.id=:id and n.username=:username")
+				.setParameter("id", id).setParameter("username", subject.getPrincipal().toString()).executeUpdate();
 
 	}
 
 	@Override
 	public void insertNewNode(String note, Date date, String priority) {
-		entityManager.persist(new Note(note, date, priority));
+		Subject subject = SecurityUtils.getSubject();
+		entityManager.persist(new Note(note, date, priority, subject
+				.getPrincipal().toString()));
 
 	}
 
