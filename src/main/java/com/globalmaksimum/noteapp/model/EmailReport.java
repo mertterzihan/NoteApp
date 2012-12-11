@@ -24,7 +24,7 @@ public class EmailReport implements ReportingService {
 	@Scheduled(cron = "0 0 * * * *")
 	public void generateAndSendReport() throws SQLException,
 			ClassNotFoundException {
-		List<Note> list = noteRepository.retrieveNotesByDate(new Date());
+		List<Note> list = noteRepository.retrieveNotesByDate(new Date(), "admin");
 		User user = userRepository.retrieveUser("admin");
 
 		SimpleMailMessage msg = new SimpleMailMessage(this.message);

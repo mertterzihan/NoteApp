@@ -1,45 +1,48 @@
 package com.globalmaksimum.noteapp;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.globalmaksimum.noteapp.model.repository.NoteBO;
-import com.sun.jersey.api.view.Viewable;
 
-@Path("/new")
+@Controller
+@RequestMapping("/home/new")
 public class NewNoteController {
 
 	private NoteBO noteRepository;
 
-	@POST
-	public Response addNewEvent(@FormParam("note") String Note,
-			@FormParam("datepicker") String Date,
-			@FormParam("priority") String Priority)
+	@RequestMapping(method = RequestMethod.POST)
+	public String addNewEvent(@RequestParam("note") String Note,
+			@RequestParam("datepicker") String Date,
+			@RequestParam("priority") String Priority, Model model, Principal principal)
 			throws ParseException {
 
 		if(!Date.matches("\\d{2}/\\d{2}/\\d{4}")){
-			return Response.status(200).entity(new Viewable("/")).build();
+			return "redirect:/home";
 		}
 		String pattern = "MM/dd/yyyy";
 		SimpleDateFormat format = new SimpleDateFormat(pattern);
 		Date date = format.parse(Date);
+		
+		String name = principal.getName();
 
-		noteRepository.insertNewNode(Note, date, Priority);
+		noteRepository.insertNewNode(Note, date, Priority, name);
 
-		return Response.status(200).entity(new Viewable("/")).build();
+		return "redirect:/home";
 	}
 	
-	@GET
-	public Response newEvent() {
+	@RequestMapping(method = RequestMethod.GET)
+	public String newEvent() {
 
-		return Response.status(200).entity(new Viewable("/new")).build();
+		return "new";
 	}
 
 	public NoteBO getNoteRepository() {

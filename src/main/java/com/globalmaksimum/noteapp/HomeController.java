@@ -1,20 +1,22 @@
 package com.globalmaksimum.noteapp;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.core.Response;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.globalmaksimum.noteapp.model.Note;
 import com.globalmaksimum.noteapp.model.repository.NoteBO;
-import com.sun.jersey.api.view.Viewable;
 
 /**
  * Handles requests for the application home page.
  */
-@Path("/")
+@Controller
+@RequestMapping("/home")
 public class HomeController {
 
 	private NoteBO noteRepository;
@@ -26,12 +28,15 @@ public class HomeController {
 	 * @throws SQLException
 	 */
 	
-	@GET
-	public Response home() {
+	@RequestMapping(method = RequestMethod.GET)
+	public String home(Model model, Principal principal) {
 
-		List<Note> instances = noteRepository.retrieveNotes();
+		String name = principal.getName();
+		List<Note> instances = noteRepository.retrieveNotes(name);
+		if(instances != null)
+			model.addAttribute("it", instances);
 
-		return Response.status(200).entity(new Viewable("/home", instances)).build();
+		return "home";
 	}
 
 	public NoteBO getNoteRepository() {
@@ -40,6 +45,12 @@ public class HomeController {
 
 	public void setNoteRepository(NoteBO noteRepository) {
 		this.noteRepository = noteRepository;
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public String logout() {
+
+			return "redirect:/";
 	}
 
 }

@@ -10,14 +10,17 @@
 <table>
 	<tr>
 		<td>
-			<form name="New" action="new" method="get">
+			<form name="New" action="home/new" method="get">
 				<input type="submit" value="New">
 			</form>
 		</td>
 		<td>
-			<form name="Delete" action="delete" method="get">
+			<form name="Delete" action="home/delete" method="get">
 				<input type="submit" value="Delete a Note">
 			</form>
+		</td>
+		<td>
+			<a href="<c:url value="/j_spring_security_logout" />" > Logout</a>
 		</td>
 	</tr>
 	<tr>

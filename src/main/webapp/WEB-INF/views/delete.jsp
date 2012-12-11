@@ -46,7 +46,7 @@
 						note : note
 					},
 					function redirect(){
-						window.location.replace("/NoteApp/");
+						window.location.replace("/NoteApp/home");
 					});
 				}); 
 	</script>

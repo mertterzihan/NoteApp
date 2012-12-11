@@ -7,7 +7,10 @@
 		and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath*:META-INF/spring/applicationContext.xml</param-value>
+		<param-value>
+			classpath*:META-INF/spring/applicationContext.xml,
+			/WEB-INF/spring-security.xml
+		</param-value>
 	</context-param>
 
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -15,45 +18,29 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<!-- Processes application requests -->
-	<!-- <servlet> <servlet-name>appServlet</servlet-name> <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> 
-		<init-param> <param-name>contextConfigLocation</param-name> <param-value></param-value> 
-		</init-param> <load-on-startup>1</load-on-startup> </servlet> <servlet-mapping> 
-		<servlet-name>appServlet</servlet-name> <url-pattern>/</url-pattern> </servlet-mapping> -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value></param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- Spring Security -->
 	<filter>
-		<filter-name>appServlet</filter-name>
-		<filter-class>
-			com.sun.jersey.spi.spring.container.servlet.SpringServlet
-		</filter-class>
-		<init-param>
-			<param-name>com.sun.ws.rest.config.property.resourceConfigClass</param-name>
-			<param-value>com.sun.ws.rest.api.core.PackagesResourceConfig</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>
-			<param-value>/((WEB-INF/views))/.*</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.JSPTemplatesBasePath</param-name>
-			<param-value>/WEB-INF/views</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.feature.Redirect</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.feature.FilterForwardOn404</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>com.globalmaksimum.noteapp</param-value>
-		</init-param>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
 
 	<filter-mapping>
-		<filter-name>appServlet</filter-name>
+		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 

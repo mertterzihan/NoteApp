@@ -13,25 +13,25 @@ public class NoteBO {
 	private NoteDAO noteDao;
 
 	@Transactional(readOnly=true)
-	public List<Note> retrieveNotes() {
-		return noteDao.retrieveNotes();
+	public List<Note> retrieveNotes(String username) {
+		return noteDao.retrieveNotes(username);
 	}
 
 	@Transactional(rollbackFor=DataAccessException.class)
-	public void deleteNote(Integer id) {
-		noteDao.deleteNote(id);
+	public void deleteNote(Integer id, String username) {
+		noteDao.deleteNote(id, username);
 
 	}
 
 	@Transactional(rollbackFor=DataAccessException.class)
-	public void insertNewNode(String note, Date date, String priority){
-		noteDao.insertNewNode(note, date, priority);
+	public void insertNewNode(String note, Date date, String priority, String username){
+		noteDao.insertNewNode(note, date, priority, username);
 
 	}
 
 	@Transactional(readOnly=true)
-	public List<Note> retrieveNotesByDate(Date date) {
-		return noteDao.retrieveNotesByDate(date);
+	public List<Note> retrieveNotesByDate(Date date, String username) {
+		return noteDao.retrieveNotesByDate(date, username);
 	}
 
 	public NoteDAO getNoteDao() {
